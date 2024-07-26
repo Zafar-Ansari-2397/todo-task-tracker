@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import FormInput from "./components/FormInput";
+import TaskList from "./components/TaskList";
+import "./index.css";
+import "./App.css";
+import Header from "./components/Header";
+import { TodoContextProvider } from "./TodoContext";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoContextProvider>
+      <div className="container">
+        <Header />
+        <FormInput />
+        <TaskList />
+      </div>
+    </TodoContextProvider>
   );
-}
+};
 
 export default App;
