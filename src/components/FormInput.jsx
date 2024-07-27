@@ -37,17 +37,17 @@ const FormInput = () => {
 
   return (
     <>
-      <form className="flex w-[400px] mx-auto mt-10">
+      <form className="flex flex-col sm:flex-row w-full max-w-lg mx-auto mt-10 space-y-4 sm:space-y-0 sm:space-x-4">
         <input
           id="outlined-basic"
           placeholder="Write Here Your Task..."
           value={inputText}
           onChange={onChangeHandler}
-          className="bg-white text-center border border-gray-300 rounded-lg p-2 w-full shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-customPurple focus:border-customPurple text-content-center"
+          className="bg-white text-center border border-gray-300 rounded-lg p-2 w-full shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-customPurple focus:border-customPurple"
         />
 
         <button
-          className="bg-green-500 text-white font-semibold py-2 px-4 rounded w-[134px]"
+          className="bg-green-500 text-white font-semibold py-2 px-4 rounded w-full sm:w-auto"
           onClick={onSubmitHandler}
         >
           Add Task

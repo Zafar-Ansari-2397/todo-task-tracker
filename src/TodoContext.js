@@ -10,26 +10,25 @@ export const TodoContextProvider = ({ children }) => {
     edit: false,
   });
 
-  // data fetching from Api's-----
-
+  // Data fetching from API
   useEffect(() => {
     axios
       .get("http://localhost:3001/tasks")
       .then((response) => setFetchingTodo(response.data))
       .catch((error) => console.error(error));
-  });
+  }, []);
 
-  // Add todo Task ------
-
+  // Add todo task
   const addTaskHandler = (task) => {
     axios
       .post("http://localhost:3001/tasks", task)
-      .then(() => setFetchingTodo([task, ...fetchingTodo]))
+      .then((response) => {
+        setFetchingTodo([response.data, ...fetchingTodo]);
+      })
       .catch((error) => console.error(error));
   };
 
-  // Delete todo Task -----
-
+  // Delete todo task
   const taskDeleteHandler = (id) => {
     const url = `http://localhost:3001/tasks/${id}`;
     axios
@@ -40,29 +39,30 @@ export const TodoContextProvider = ({ children }) => {
       .catch((error) => console.error(error));
   };
 
-  // update Todos Item ------
+  // Update todos item
   const updateTodos = (todoid, updatedTodo) => {
-    console.log(updatedTodo);
     const url = `http://localhost:3001/tasks/${todoid}`;
     axios
       .put(url, updatedTodo)
-      .then(() => {
+      .then((response) => {
+        const updatedTask = response.data;
         setFetchingTodo(
           fetchingTodo.map((item) =>
-            item.id === todoid ? { item, ...updatedTodo } : item
+            item.id === todoid ? { ...item, ...updatedTask } : item
           )
         );
       })
       .catch((error) => console.error("Error updating todo:", error));
   };
 
-  //   set Item to be Updated -----
+  // Set item to be updated
   const editTodos = (item) => {
     setTodosEdit({
       item: item,
       edit: true,
     });
   };
+
   return (
     <TodoContext.Provider
       value={{

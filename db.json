@@ -1,13 +1,8 @@
 {
   "tasks": [
     {
-      "id": "1f5308cd-71bd-4eec-9099-0d10bc6934a0",
-      "title": "movie",
-      "completed": false
-    },
-    {
-      "id": "c77d9e83-b6f6-4994-87b2-2e2ee5acfc0d",
-      "title": "Coffee",
+      "id": "aff0e67e-f4b7-4c2b-8e05-74832d502eea",
+      "title": "This is a Todo App",
       "completed": false
     }
   ]
