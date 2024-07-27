@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 const TodoContext = createContext();
@@ -12,40 +13,47 @@ export const TodoContextProvider = ({ children }) => {
   // data fetching from Api's-----
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos"
-        );
-        const data = await response.json();
-        setFetchingTodo(data);
-      } catch (error) {
-        console.log("Error Fetching Data...", Error);
-      }
-    };
-    fetchData();
-  }, []);
+    axios
+      .get("http://localhost:3001/tasks")
+      .then((response) => setFetchingTodo(response.data))
+      .catch((error) => console.error(error));
+  });
 
   // Add todo Task ------
 
   const addTaskHandler = (task) => {
-    setFetchingTodo([task, ...fetchingTodo]);
+    axios
+      .post("http://localhost:3001/tasks", task)
+      .then(() => setFetchingTodo([task, ...fetchingTodo]))
+      .catch((error) => console.error(error));
   };
 
   // Delete todo Task -----
 
   const taskDeleteHandler = (id) => {
-    console.log(id);
-    setFetchingTodo(fetchingTodo.filter((taskItem) => taskItem.id !== id));
+    const url = `http://localhost:3001/tasks/${id}`;
+    axios
+      .delete(url)
+      .then(() =>
+        setFetchingTodo(fetchingTodo.filter((taskItem) => taskItem.id !== id))
+      )
+      .catch((error) => console.error(error));
   };
 
   // update Todos Item ------
   const updateTodos = (todoid, updatedTodo) => {
-    setFetchingTodo(
-      fetchingTodo.map((item) =>
-        item.id === todoid ? { ...item, ...updatedTodo } : item
-      )
-    );
+    console.log(updatedTodo);
+    const url = `http://localhost:3001/tasks/${todoid}`;
+    axios
+      .put(url, updatedTodo)
+      .then(() => {
+        setFetchingTodo(
+          fetchingTodo.map((item) =>
+            item.id === todoid ? { item, ...updatedTodo } : item
+          )
+        );
+      })
+      .catch((error) => console.error("Error updating todo:", error));
   };
 
   //   set Item to be Updated -----

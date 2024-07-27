@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import TodoContext from "../TodoContext";
+import { v4 as uuidv4 } from "uuid";
 
 const FormInput = () => {
   const { addTaskHandler, todosEdit, updateTodos } = useContext(TodoContext);
@@ -7,7 +8,6 @@ const FormInput = () => {
 
   const onChangeHandler = (e) => {
     setInputText(e.target.value);
-    console.log(e.target.value);
   };
 
   const onSubmitHandler = (e) => {
@@ -15,18 +15,18 @@ const FormInput = () => {
 
     if (!inputText) return;
     const newTaskAdd = {
-      id: Date.now(),
+      id: uuidv4(),
       title: inputText,
       completed: false,
     };
-    addTaskHandler(newTaskAdd);
 
     if (todosEdit.edit === true) {
       updateTodos(todosEdit.item.id, newTaskAdd);
       setInputText("");
     } else {
-      setInputText("");
+      addTaskHandler(newTaskAdd);
     }
+    setInputText("");
   };
 
   useEffect(() => {
